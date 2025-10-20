@@ -7,11 +7,12 @@ public class EntryPoint : MonoBehaviour
     {
         InitializeUIManager();
         InitializeSubWindows();
+        InitializePlayerMovement();
     }
 
     public void Start()
     {
-
+        LateInitializePlayerMovement();
     }
 
     //Initialization
@@ -30,6 +31,15 @@ public class EntryPoint : MonoBehaviour
         }
     }
 
+    private void InitializePlayerMovement()
+    {
+        FindAnyObjectByType(typeof(FirstPersonController)).GetComponent<FirstPersonController>().Initialize();
+    }
 
     //Late initialization
+
+    private void LateInitializePlayerMovement()
+    {
+        FindAnyObjectByType(typeof(FirstPersonController)).GetComponent<FirstPersonController>().LateInitialize();
+    }
 }

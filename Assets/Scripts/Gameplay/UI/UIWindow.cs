@@ -10,12 +10,20 @@ public class UIWindow : MonoBehaviour
     {
         Cursor.lockState = CursorLockMode.Confined;
         transform.GetChild(0).gameObject.SetActive(true);
+        EventBus<UIOpenEvent>.Raise(new UIOpenEvent
+        {
+            opened = true,
+        });
     }
 
     public void TurnOff() 
     { 
         transform.GetChild(0).gameObject.SetActive(false);
         Cursor.lockState = CursorLockMode.Locked;
+        EventBus<UIOpenEvent>.Raise(new UIOpenEvent
+        {
+            opened = false,
+        });
     }
 
     public bool GetState() => transform.GetChild(0).gameObject.activeInHierarchy;
