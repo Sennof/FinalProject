@@ -10,7 +10,10 @@ public class SubWindowManager : MonoBehaviour, ISubWindowManager
 
     private UIWindow _uiWindow;
 
-    public void Initialize() => _uiWindow = GetComponent<UIWindow>();
+    public void Initialize()
+    {
+        _uiWindow = GetComponent<UIWindow>();
+    }
 
     public void ToPage(int index)
     {

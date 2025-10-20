@@ -6,9 +6,17 @@ public class UIWindow : MonoBehaviour
 
     public UIWindowsEnum GetWindowType() => _type;
 
-    public void TurnOn() => transform.GetChild(0).gameObject.SetActive(true);
+    public void TurnOn()
+    {
+        Cursor.lockState = CursorLockMode.Confined;
+        transform.GetChild(0).gameObject.SetActive(true);
+    }
 
-    public void TurnOff() => transform.GetChild(0).gameObject.SetActive(false);
+    public void TurnOff() 
+    { 
+        transform.GetChild(0).gameObject.SetActive(false);
+        Cursor.lockState = CursorLockMode.Locked;
+    }
 
     public bool GetState() => transform.GetChild(0).gameObject.activeInHierarchy;
 }

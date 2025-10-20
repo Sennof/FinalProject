@@ -2683,7 +2683,7 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 620377786}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0, y: 0, z: 0}
   m_ConstrainProportionsScale: 0
@@ -5885,6 +5885,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1410401037}
   - component: {fileID: 1410401038}
+  - component: {fileID: 1410401039}
   m_Layer: 0
   m_Name: PAUSE MENU CONTAINER
   m_TagString: UIWindow
@@ -5921,6 +5922,23 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _type: 1
+--- !u!114 &1410401039
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1410401036}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b3da7c2895b6d3341ad63932cb1fe012, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _triggerKey: 9
+  _pages:
+  - {fileID: 1769370876}
+  - {fileID: 1426319470}
+  - {fileID: 635258355}
 --- !u!1 &1417536393
 GameObject:
   m_ObjectHideFlags: 0
@@ -7034,6 +7052,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1687948252}
+  - component: {fileID: 1687948253}
   m_Layer: 0
   m_Name: SERVICES
   m_TagString: Untagged
@@ -7057,6 +7076,18 @@ Transform:
   - {fileID: 1912882810}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1687948253
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1687948251}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2d072f470a1a155498e0961948333cfd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &1696311005 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4459864850019384738, guid: 6bacecc4f3df9584198879c73a6b6c36, type: 3}
