@@ -461,6 +461,9 @@ public class FirstPersonController : MonoBehaviour
             playerCanMove = false;
             enableJump = false;
             enableCrouch = false;
+            enableHeadBob = false;
+            enableSprint = false;
+            enableZoom = false;
         }
         else
         {
@@ -468,6 +471,9 @@ public class FirstPersonController : MonoBehaviour
             playerCanMove = true;
             enableJump = true;
             enableCrouch = true;
+            enableHeadBob = true;
+            enableSprint = true;
+            enableZoom = true;
         }
     }
 

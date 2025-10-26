@@ -10,8 +10,11 @@ public class UIManager : MonoBehaviour, IUIManager
         UIWindow[] windows = FindObjectsByType<UIWindow>(0);
         foreach (UIWindow window in windows)
             UIWindows.Add(window);
+    }
 
-        OffWindows();
+    public void LateInitialize() 
+    {
+        OffWindows(); 
     }
 
     public void ToWindow(UIWindowsEnum type)

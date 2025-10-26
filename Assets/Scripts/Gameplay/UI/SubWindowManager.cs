@@ -1,19 +1,19 @@
 using System.Collections.Generic;
 using UnityEngine;
+using Zenject;
 
-[RequireComponent (typeof(UIWindow))]
 public class SubWindowManager : MonoBehaviour, ISubWindowManager
 {
-    [SerializeField] private KeyCode _triggerKey = KeyCode.None;
-
     [SerializeField] private List<GameObject> _pages = new();
-
     private UIWindow _uiWindow;
+
+    [Inject] private IGameManager _gameManager;
 
     public void Initialize()
     {
         _uiWindow = GetComponent<UIWindow>();
     }
+
 
     public void ToPage(int index)
     {
@@ -26,14 +26,5 @@ public class SubWindowManager : MonoBehaviour, ISubWindowManager
         }
     }
 
-    public void Update()
-    {
-        if (Input.GetKeyUp(_triggerKey))
-        {
-            if(!_uiWindow.GetState())
-                _uiWindow.TurnOn();
-            else
-                _uiWindow.TurnOff();
-        }
-    }
+    public void QuitGame() => _gameManager.ToScene(0);
 }

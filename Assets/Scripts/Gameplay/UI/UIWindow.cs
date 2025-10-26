@@ -3,28 +3,56 @@ using UnityEngine;
 public class UIWindow : MonoBehaviour
 {
     [SerializeField] private UIWindowsEnum _type;
+    [SerializeField] private KeyCode _triggerKey = KeyCode.None;
 
     public UIWindowsEnum GetWindowType() => _type;
 
+    private SubWindowManager _subWindowManager;
+    private GameObject _window;
+
+    public void Update()
+    {
+        if (Input.GetKeyUp(_triggerKey))
+        {
+            if (!transform.GetChild(0).gameObject.activeInHierarchy)
+                TurnOn();
+            else
+                TurnOff();
+        }
+    }
+
+    public void Inititalize()
+    {
+        _window = transform.GetChild(0).gameObject;
+        _subWindowManager = _window.GetComponent<SubWindowManager>();
+    }
+
     public void TurnOn()
     {
-        Cursor.lockState = CursorLockMode.Confined;
-        transform.GetChild(0).gameObject.SetActive(true);
-        EventBus<UIOpenEvent>.Raise(new UIOpenEvent
+        if (_triggerKey != KeyCode.None)
         {
-            opened = true,
-        });
+            _window.SetActive(true);
+            _subWindowManager.ToPage(0);
+
+            Cursor.lockState = CursorLockMode.Confined;
+            EventBus<UIOpenEvent>.Raise(new UIOpenEvent
+            {
+                opened = true,
+            });
+        }
     }
 
     public void TurnOff() 
-    { 
-        transform.GetChild(0).gameObject.SetActive(false);
-        Cursor.lockState = CursorLockMode.Locked;
-        EventBus<UIOpenEvent>.Raise(new UIOpenEvent
+    {
+        if (_triggerKey != KeyCode.None)
         {
-            opened = false,
-        });
-    }
+            _window.SetActive(false);
 
-    public bool GetState() => transform.GetChild(0).gameObject.activeInHierarchy;
+            Cursor.lockState = CursorLockMode.Locked;
+            EventBus<UIOpenEvent>.Raise(new UIOpenEvent
+            {
+                opened = false,
+            });
+        }
+    }
 }

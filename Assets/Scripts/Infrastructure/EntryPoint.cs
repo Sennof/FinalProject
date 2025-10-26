@@ -1,24 +1,30 @@
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class EntryPoint : MonoBehaviour
 {
-    public void Awake()
+
+    private void Awake()
     {
+        InitializeUIWindows();
         InitializeUIManager();
         InitializeSubWindows();
         InitializePlayerMovement();
+        Debug.Log("Entry point awake is over");
     }
 
-    public void Start()
+    private void Start()
     {
         LateInitializePlayerMovement();
+        LateInitializeUIManagers();
+
+        Debug.Log("Entry point start is over");
     }
 
     //Initialization
     private void InitializeUIManager() 
     {
-        GameObject.FindAnyObjectByType(typeof(UIManager)).GetComponent<UIManager>().Initialize();
+        (FindAnyObjectByType(typeof(UIManager)) as UIManager).Initialize();
+        Debug.Log("Entry point UI manager initialization is over");
     }
 
     private void InitializeSubWindows()
@@ -28,18 +34,41 @@ public class EntryPoint : MonoBehaviour
         foreach (SubWindowManager subWindow in subWindowManagers)
         {
             subWindow.Initialize();
+            Debug.Log($"Entry point UI subwindow {subWindow.gameObject.name} initialized");
         }
+
+        Debug.Log("Entry point SubWindows initialization is over");
+    }
+
+    private void InitializeUIWindows()
+    {
+        UIWindow[] uiWindows = GameObject.FindObjectsByType<UIWindow>(0);
+
+        foreach (UIWindow uiWindow in uiWindows)
+        {
+            uiWindow.Inititalize();
+            Debug.Log($"Entry point UI subwindow {uiWindow.gameObject.name} initialized");
+        }
+        Debug.Log("Entry point UIWindows initialization is over");
     }
 
     private void InitializePlayerMovement()
     {
-        FindAnyObjectByType(typeof(FirstPersonController)).GetComponent<FirstPersonController>().Initialize();
+        (FindAnyObjectByType(typeof(FirstPersonController)) as FirstPersonController).Initialize();
+        Debug.Log($"Entry point Players movement initialized");
     }
 
     //Late initialization
 
     private void LateInitializePlayerMovement()
     {
-        FindAnyObjectByType(typeof(FirstPersonController)).GetComponent<FirstPersonController>().LateInitialize();
+        (FindAnyObjectByType(typeof(FirstPersonController)) as FirstPersonController).LateInitialize();
+        Debug.Log($"Entry point late Players movement initialized");
+    }
+
+    private void LateInitializeUIManagers()
+    {
+        (FindAnyObjectByType(typeof(UIManager)) as UIManager).LateInitialize();
+        Debug.Log($"Entry point late UIManagers initialized");
     }
 }
