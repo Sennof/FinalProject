@@ -16,6 +16,8 @@ using UnityEngine.UI;
 
 public class FirstPersonController : MonoBehaviour
 {
+    private EventBinding<UIOpenEvent> eventBinding;
+
     private Rigidbody rb;
 
     #region Camera Movement Variables
@@ -131,7 +133,7 @@ public class FirstPersonController : MonoBehaviour
 
     #endregion
 
-    private void Awake()
+    public void Initialize()
     {
         rb = GetComponent<Rigidbody>();
 
@@ -149,7 +151,7 @@ public class FirstPersonController : MonoBehaviour
         }
     }
 
-    void Start()
+    public void LateInitialize()
     {
         if(lockCursor)
         {
@@ -196,6 +198,16 @@ public class FirstPersonController : MonoBehaviour
         }
 
         #endregion
+
+        #region EventBus
+        eventBinding = new EventBinding<UIOpenEvent>(HandleUIOpen);
+        EventBus<UIOpenEvent>.Register(eventBinding);
+        #endregion
+    }
+
+    private void OnDisable()
+    {
+        EventBus<UIOpenEvent>.Deregister(eventBinding);
     }
 
     float camRotation;
@@ -439,6 +451,30 @@ public class FirstPersonController : MonoBehaviour
         }
 
         #endregion
+    }
+
+    private void HandleUIOpen(UIOpenEvent UIOpenEvent)
+    {
+        if (UIOpenEvent.opened == true)
+        {
+            cameraCanMove = false;
+            playerCanMove = false;
+            enableJump = false;
+            enableCrouch = false;
+            enableHeadBob = false;
+            enableSprint = false;
+            enableZoom = false;
+        }
+        else
+        {
+            cameraCanMove = true;
+            playerCanMove = true;
+            enableJump = true;
+            enableCrouch = true;
+            enableHeadBob = true;
+            enableSprint = true;
+            enableZoom = true;
+        }
     }
 
     // Sets isGrounded based on a raycast sent straigth down from the player object
