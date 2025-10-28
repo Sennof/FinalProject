@@ -9,5 +9,6 @@ public struct UIOpenEvent : IEvent
 
 public struct UIInteractionEvent : IEvent
 {
-    public KeyCode KeyCode;
+    public bool? Enabled;
+    public KeyCode? KeyCode;
 }
