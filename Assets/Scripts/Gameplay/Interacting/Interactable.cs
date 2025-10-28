@@ -19,7 +19,7 @@ public class Interactable : MonoBehaviour
             if (Action != null)
                 Action();
             else
-                Debug.LogError($"Cant invoke action because its null | {name}");
+                Debug.LogError($"Cant invoke action because its null | {name} | Interactable");
 
             Debug.Log("Action invoked");
         }

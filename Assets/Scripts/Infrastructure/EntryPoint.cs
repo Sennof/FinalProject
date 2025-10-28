@@ -9,6 +9,7 @@ public class EntryPoint : MonoBehaviour
         InitializeUIManager();
         InitializeSubWindows();
         InitializePlayerMovement();
+        InitializeHintShower();
         Debug.Log("Entry point awake is over");
     }
 
@@ -16,6 +17,7 @@ public class EntryPoint : MonoBehaviour
     {
         LateInitializePlayerMovement();
         LateInitializeUIManagers();
+        LateInitializeInteractRay();
 
         Debug.Log("Entry point start is over");
     }
@@ -58,7 +60,18 @@ public class EntryPoint : MonoBehaviour
         Debug.Log($"Entry point Players movement initialized");
     }
 
+    private void InitializeHintShower()
+    {
+        (FindAnyObjectByType(typeof(HintShower)) as HintShower).Initialize();
+        Debug.Log("Entry point HintShower initialized");
+    }
+
     //Late initialization
+    private void LateInitializeInteractRay()
+    {
+        (FindAnyObjectByType(typeof(InteractRay)) as InteractRay).LateInitialize();
+        Debug.Log("Entry point late InteractRay initialized");
+    }
 
     private void LateInitializePlayerMovement()
     {
