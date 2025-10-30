@@ -8,8 +8,15 @@ public class GameManager : MonoBehaviour, IGameManager
         Application.Quit();
     }
 
-    public void ToScene(ScenesEnum scene)
+    public void ToScene(int index)
     {
+        //SceneManager.LoadScene(index);
+        Debug.Log("SCENE SHOULD BE SWITCHED");
+    }
+
+    public void ToScene(ScenesEnum index)
+    {
+        //SceneManager.LoadScene((int)index);
         Debug.Log("SCENE SHOULD BE SWITCHED");
     }
 }

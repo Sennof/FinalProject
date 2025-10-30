@@ -1,12 +1,15 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class Interactable : MonoBehaviour
 {
-    [Tooltip("The action that will be performed")]
-    [SerializeField] private Action Action;
+    [SerializeField] private UnityEvent _action;
+
     [Tooltip("The distance for interaction")]
     [SerializeField] private float _actableDistance;
+
     [Tooltip("The key for interaction")]
     [SerializeField] private KeyCode KeyCode = KeyCode.E;
 
@@ -16,8 +19,10 @@ public class Interactable : MonoBehaviour
     {
         if (_isInteractable)
         {
-            if (Action != null)
-                Action();
+            if (_action != null)
+            {
+                _action.Invoke();
+            }
             else
                 Debug.LogError($"Cant invoke action because its null | {name} | Interactable");
 

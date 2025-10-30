@@ -5,8 +5,8 @@ public class EntryPoint : MonoBehaviour
 
     private void Awake()
     {
-        InitializeUIWindows();
         InitializeUIManager();
+        InitializeUIWindows();
         InitializeSubWindows();
         InitializePlayerMovement();
         InitializeHintShower();
@@ -48,7 +48,7 @@ public class EntryPoint : MonoBehaviour
 
         foreach (UIWindow uiWindow in uiWindows)
         {
-            uiWindow.Inititalize();
+            uiWindow.Initialize();
             Debug.Log($"Entry point UI subwindow {uiWindow.gameObject.name} initialized");
         }
         Debug.Log("Entry point UIWindows initialization is over");
