@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class UIWindow : MonoBehaviour
@@ -19,6 +20,8 @@ public class UIWindow : MonoBehaviour
     private GameObject _window;
 
     private EventBinding<UIOpenEvent> _eventBinding;
+
+    private Coroutine _coroutine;
 
 
     public void Initialize()
@@ -53,34 +56,31 @@ public class UIWindow : MonoBehaviour
                     TurnOn();
             }
             else
-                    TurnOff();
+                TurnOff();
         }
     }
 
     public void TurnOn()
     {
-        if (_triggerKey != KeyCode.None)
-        {
-            _window.SetActive(true);
-            _subWindowManager.ToPage(0);
+        _window.SetActive(true);
+        _subWindowManager.ToPage(0);
 
-            Cursor.lockState = CursorLockMode.Confined;
-            EventBus<UIOpenEvent>.Raise(new UIOpenEvent
-            {
-                opened = true,
-            });
-        }
+        Cursor.lockState = CursorLockMode.Confined;
+        EventBus<UIOpenEvent>.Raise(new UIOpenEvent
+        {
+            opened = true,
+        });
     }
 
     public void TurnOff() 
     {
         _window.SetActive(false);
-
         Cursor.lockState = CursorLockMode.Locked;
-        EventBus<UIOpenEvent>.Raise(new UIOpenEvent
-        {
-            opened = false,
-        });
+
+        if (_coroutine != null)
+            StopCoroutine(_coroutine);
+
+        _coroutine = StartCoroutine(EventInvoker());
     }
 
     private void HandleExtraOpenedUI(UIOpenEvent UIOpenEvent)
@@ -92,5 +92,15 @@ public class UIWindow : MonoBehaviour
             _enableManagement = false;
         else
             _enableManagement = true;
+    }
+
+    private IEnumerator EventInvoker()
+    {
+        yield return new WaitForSeconds(0.5f);
+
+        EventBus<UIOpenEvent>.Raise(new UIOpenEvent
+        {
+            opened = false,
+        });
     }
 }
