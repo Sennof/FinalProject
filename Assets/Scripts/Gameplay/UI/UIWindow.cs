@@ -96,7 +96,7 @@ public class UIWindow : MonoBehaviour
 
     private IEnumerator EventInvoker()
     {
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(0.1f); //should be optimized for different devices
 
         EventBus<UIOpenEvent>.Raise(new UIOpenEvent
         {
