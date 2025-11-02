@@ -63,7 +63,6 @@ public class UIWindow : MonoBehaviour
     public void TurnOn()
     {
         _window.SetActive(true);
-        _subWindowManager.ToPage(0);
 
         Cursor.lockState = CursorLockMode.Confined;
         EventBus<UIOpenEvent>.Raise(new UIOpenEvent

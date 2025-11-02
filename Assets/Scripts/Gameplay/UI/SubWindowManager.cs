@@ -4,10 +4,17 @@ using UnityEngine;
 public class SubWindowManager : MonoBehaviour, ISubWindowManager
 {
     [SerializeField] private List<GameObject> _pages = new();
+    [SerializeField] private bool _resetPageOnDisable = true;
 
     public void Initialize()
     {
         //Initialization 
+    }
+
+    private void OnDisable()
+    {
+        if (_resetPageOnDisable)
+            ToPage(0);
     }
 
 
