@@ -25,63 +25,121 @@ public class EntryPoint : MonoBehaviour
     //Initialization
     private void InitializeUIManager() 
     {
-        (FindAnyObjectByType(typeof(UIManager)) as UIManager).Initialize();
-        Debug.Log("Entry point UI manager initialization is over");
+        try
+        {
+            (FindAnyObjectByType(typeof(UIManager)) as UIManager).Initialize();
+            Debug.Log("Entry point UI manager initialization is over");
+        }
+        catch
+        {
+            Debug.LogError("Failed to initialize UIManager | EntryPoint");
+        }
     }
 
     private void InitializeSubWindows()
     {
-        SubWindowManager[] subWindowManagers = GameObject.FindObjectsByType<SubWindowManager>(0);
-
-        foreach (SubWindowManager subWindow in subWindowManagers)
+        try
         {
-            subWindow.Initialize();
-            Debug.Log($"Entry point UI subwindow {subWindow.gameObject.name} initialized");
-        }
+            SubWindowManager[] subWindowManagers = GameObject.FindObjectsByType<SubWindowManager>(0);
 
-        Debug.Log("Entry point SubWindows initialization is over");
+            foreach (SubWindowManager subWindow in subWindowManagers)
+            {
+                subWindow.Initialize();
+                Debug.Log($"Entry point UI subwindow {subWindow.gameObject.name} initialized");
+            }
+
+            Debug.Log("Entry point SubWindows initialization is over");
+        }
+        catch
+        {
+            Debug.LogError("Failed to initialize SubWindows | EntryPoint");
+        }
     }
+
 
     private void InitializeUIWindows()
     {
-        UIWindow[] uiWindows = GameObject.FindObjectsByType<UIWindow>(0);
-
-        foreach (UIWindow uiWindow in uiWindows)
+        try
         {
-            uiWindow.Initialize();
-            Debug.Log($"Entry point UI subwindow {uiWindow.gameObject.name} initialized");
+            UIWindow[] uiWindows = GameObject.FindObjectsByType<UIWindow>(0);
+
+            foreach (UIWindow uiWindow in uiWindows)
+            {
+                uiWindow.Initialize();
+                Debug.Log($"Entry point UI subwindow {uiWindow.gameObject.name} initialized");
+            }
+            Debug.Log("Entry point UIWindows initialization is over");
         }
-        Debug.Log("Entry point UIWindows initialization is over");
+        catch
+        {
+            Debug.LogError("Failed to initialize UIWindows | EntryPoint");
+        }
     }
+
 
     private void InitializePlayerMovement()
     {
-        (FindAnyObjectByType(typeof(FirstPersonController)) as FirstPersonController).Initialize();
-        Debug.Log($"Entry point Players movement initialized");
+        try
+        {
+            (FindAnyObjectByType(typeof(FirstPersonController)) as FirstPersonController).Initialize();
+            Debug.Log($"Entry point Players movement initialized");
+        }
+        catch
+        {
+            Debug.LogError("Failed to initialize PlayerMovements | EntryPoint");
+        }
     }
 
     private void InitializeHintShower()
     {
-        (FindAnyObjectByType(typeof(HintShower)) as HintShower).Initialize();
-        Debug.Log("Entry point HintShower initialized");
+        try
+        {
+            (FindAnyObjectByType(typeof(HintShower)) as HintShower).Initialize();
+            Debug.Log("Entry point HintShower initialized");
+        }
+        catch 
+        {
+            Debug.LogError("Failed to initialize HintShower | EntryPoint");
+        }
     }
 
     //Late initialization
     private void LateInitializeInteractRay()
     {
-        (FindAnyObjectByType(typeof(InteractRay)) as InteractRay).LateInitialize();
-        Debug.Log("Entry point late InteractRay initialized");
+        try
+        {
+            (FindAnyObjectByType(typeof(InteractRay)) as InteractRay).LateInitialize();
+            Debug.Log("Entry point late InteractRay initialized");
+        }
+        catch
+        {
+            Debug.LogError("Failed to lateInitialize InteractRay | EntryPoint");
+        }
     }
 
     private void LateInitializePlayerMovement()
     {
-        (FindAnyObjectByType(typeof(FirstPersonController)) as FirstPersonController).LateInitialize();
-        Debug.Log($"Entry point late Players movement initialized");
+        try
+        {
+            (FindAnyObjectByType(typeof(FirstPersonController)) as FirstPersonController).LateInitialize();
+            Debug.Log($"Entry point late Players movement initialized");
+        }
+        catch
+        {
+            Debug.LogError("Failed to lateInitialize PlayerMovement | EntryPoint");
+        }
     }
 
     private void LateInitializeUIManagers()
     {
-        (FindAnyObjectByType(typeof(UIManager)) as UIManager).LateInitialize();
-        Debug.Log($"Entry point late UIManagers initialized");
+        try
+        {
+            (FindAnyObjectByType(typeof(UIManager)) as UIManager).LateInitialize();
+            Debug.Log($"Entry point late UIManagers initialized");
+        }
+        catch
+        {
+            Debug.LogError("Failed to lateInitialize UIManagers | EntryPoint");
+        }
     }
 }
