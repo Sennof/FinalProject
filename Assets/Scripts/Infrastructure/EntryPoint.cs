@@ -5,6 +5,8 @@ public class EntryPoint : MonoBehaviour
 
     private void Awake()
     {
+        InitializeItems();
+
         InitializeUIManager();
         InitializeUIWindows();
         InitializeSubWindows();
@@ -98,6 +100,19 @@ public class EntryPoint : MonoBehaviour
             Debug.Log("Entry point HintShower initialized");
         }
         catch 
+        {
+            Debug.LogError("Failed to initialize HintShower | EntryPoint");
+        }
+    }
+
+    private void InitializeItems()
+    {
+        try
+        {
+            (FindAnyObjectByType(typeof(ItemBase)) as ItemBase).Initialize();
+            Debug.Log("Entry point HintShower initialized");
+        }
+        catch
         {
             Debug.LogError("Failed to initialize HintShower | EntryPoint");
         }
