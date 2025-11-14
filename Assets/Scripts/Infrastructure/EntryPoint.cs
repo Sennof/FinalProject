@@ -6,12 +6,17 @@ public class EntryPoint : MonoBehaviour
     private void Awake()
     {
         InitializeItems();
+        InitializeInventory();
+        InitializeInventoryUI();
+        InitializeHintShower();
+
+        InitializeInteractables();
 
         InitializeUIManager();
         InitializeUIWindows();
         InitializeSubWindows();
+
         InitializePlayerMovement();
-        InitializeHintShower();
         Debug.Log("Entry point awake is over");
     }
 
@@ -63,7 +68,7 @@ public class EntryPoint : MonoBehaviour
     {
         try
         {
-            UIWindow[] uiWindows = GameObject.FindObjectsByType<UIWindow>(0);
+            UIWindow[] uiWindows = FindObjectsByType<UIWindow>(0);
 
             foreach (UIWindow uiWindow in uiWindows)
             {
@@ -109,12 +114,63 @@ public class EntryPoint : MonoBehaviour
     {
         try
         {
-            (FindAnyObjectByType(typeof(ItemBase)) as ItemBase).Initialize();
+            ItemBase[] items = FindObjectsByType<ItemBase>(0);
+
+            foreach (ItemBase item in items)
+            {
+                item.Initialize();
+                Debug.Log($"Entry point initialized Item {item.name}");
+            }
             Debug.Log("Entry point HintShower initialized");
         }
         catch
         {
             Debug.LogError("Failed to initialize HintShower | EntryPoint");
+        }
+    }
+
+    private void InitializeInventory()
+    {
+        try
+        {
+            (FindAnyObjectByType(typeof(Inventory)) as Inventory).Initialize();
+            Debug.Log("Entry point Inventory initialized");
+        }
+        catch
+        {
+            Debug.LogError("Failed to initialize Inventory | EntryPoint");
+        }
+    }
+
+    private void InitializeInteractables()
+    {
+        try
+        {
+            Interactable[] interactables = FindObjectsByType<Interactable>(0);
+
+            foreach(Interactable interactable in interactables)
+            {
+                interactable.Initialize();
+                Debug.Log($"Entry point initialized interactable {interactable.name}");
+            }
+            Debug.Log("Entry point initialized Interactables | EntryPoint");
+        }
+        catch
+        {
+            Debug.LogError($"Failed to initialize Interactables | EntryPoint");
+        }
+    }
+
+    private void InitializeInventoryUI()
+    {
+        try
+        {
+            (FindAnyObjectByType(typeof(InventoryUI)) as InventoryUI).Initialize();
+            Debug.Log("EntryPoint initialized InventoryUI");
+        }
+        catch
+        {
+            Debug.LogError("Failed to initialize InventoryUI | EntryPoint");
         }
     }
 
