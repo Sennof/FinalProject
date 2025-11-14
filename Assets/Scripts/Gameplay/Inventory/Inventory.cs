@@ -1,8 +1,9 @@
-using Unity.VisualScripting;
+using System.Collections;
 using UnityEngine;
 
 public class Inventory : MonoBehaviour, IInventory
 {
+    #region variables
     [Header("UI")]
     [Tooltip("View ñontroller")]
     [SerializeField] private InventoryUI _uiController;
@@ -16,29 +17,50 @@ public class Inventory : MonoBehaviour, IInventory
     [Header("Interaction")]
     [Tooltip("The key for throwing away an object")]
     [SerializeField] private KeyCode _throwTriggerey = KeyCode.Mouse0;
+    [Tooltip("The key for droping an object")]
+    [SerializeField] private KeyCode _dropTriggerey = KeyCode.Mouse1;
 
-    public EventBinding<ItemPickUpEvent> _eventBinding;
+    private EventBinding<ItemPickUpEvent> _itemPickUpEventBinding;
+    private EventBinding<UIOpenEvent> _uiOpenEventBinding;
 
-    public GameObject[] _keptItemObjects = new GameObject[2];
-    public ItemBase[] _keptItemBases = new ItemBase[2];
+    private GameObject[] _keptItemObjects = new GameObject[2];
+    private ItemBase[] _keptItemBases = new ItemBase[2];
 
-    public int _currentItemSlotIndex = 0;
+    private int _currentItemSlotIndex = 0;
 
-    private void OnDisable()
+    private bool _enabled = true;
+    private Coroutine _cooldownCoroutine = null;
+
+    #endregion
+
+    public void Initialize()
     {
-        EventBus<ItemPickUpEvent>.Deregister(_eventBinding);
+        _itemPickUpEventBinding = new EventBinding<ItemPickUpEvent>(HandlePickUp);
+        EventBus<ItemPickUpEvent>.Register(_itemPickUpEventBinding);
+
+        _uiOpenEventBinding = new EventBinding<UIOpenEvent>(HandleUIOpen);
+        EventBus<UIOpenEvent>.Register(_uiOpenEventBinding);
+
+        if (_handsFolder == null || _playgroundFolder == null)
+            Debug.LogError($"There is not enough data for normal operation | {name}");
     }
 
     private void Update()
     {
-        if (Input.GetKeyDown(_throwTriggerey))
+        if (!_enabled)
+            return;
+
+        if (Input.GetKeyDown(_throwTriggerey) && _keptItemObjects[_currentItemSlotIndex] != null)
             ThrowObj();
 
-        if(Input.GetAxis("Mouse ScrollWheel") != 0f)
+        if (Input.GetKeyDown(_dropTriggerey) && _keptItemObjects[_currentItemSlotIndex] != null)
+            DropObj();
+
+        if (Input.GetAxis("Mouse ScrollWheel") != 0f)
         {
             if (_keptItemObjects[_currentItemSlotIndex] != null)
                 _keptItemObjects[_currentItemSlotIndex].SetActive(false);
-            
+
             _currentItemSlotIndex = 1 - _currentItemSlotIndex;
 
             if (_keptItemObjects[_currentItemSlotIndex] != null)
@@ -48,18 +70,24 @@ public class Inventory : MonoBehaviour, IInventory
         }
     }
 
-    public void Initialize()
+    private void OnDisable()
     {
-        _eventBinding = new EventBinding<ItemPickUpEvent>(HandlePickUp);
-        EventBus<ItemPickUpEvent>.Register(_eventBinding);
-
-
-        if (_handsFolder == null || _playgroundFolder == null)
-            Debug.LogError($"There is not enough data for normal operation | {name}");
+        EventBus<ItemPickUpEvent>.Deregister(_itemPickUpEventBinding);
+        EventBus<UIOpenEvent>.Deregister(_uiOpenEventBinding);
+    }
+    private void HandleUIOpen(UIOpenEvent UIOpenEvent)
+    {
+        if (UIOpenEvent.opened)
+            _enabled = false;
+        else
+            _enabled = true;
     }
 
     public void HandlePickUp(ItemPickUpEvent eventData)
     {
+        if (!enabled)
+            return;
+
         int slotIndex = _currentItemSlotIndex;
         bool isLocalSlotDifferent = false;
 
@@ -84,7 +112,9 @@ public class Inventory : MonoBehaviour, IInventory
         if(isLocalSlotDifferent)
             _keptItemObjects[slotIndex].SetActive(false);
 
-        _uiController.SetIcon(_keptItemBases[_currentItemSlotIndex].Icon, _currentItemSlotIndex);
+        _uiController.SetIcon(_keptItemBases[slotIndex].Icon, slotIndex);
+
+        StartCooldown();
     }
 
     public void ThrowObj()
@@ -98,6 +128,38 @@ public class Inventory : MonoBehaviour, IInventory
             _keptItemObjects[_currentItemSlotIndex] = null;
 
             _uiController.ClearIcon(_currentItemSlotIndex);
+
+            StartCooldown();
         }
+    }
+
+    public void DropObj()
+    {
+        _keptItemBases[_currentItemSlotIndex].transform.SetParent(_playgroundFolder);
+        _keptItemBases[_currentItemSlotIndex].Drop();
+
+        _keptItemBases[_currentItemSlotIndex] = null;
+        _keptItemObjects[_currentItemSlotIndex] = null;
+
+        _uiController.ClearIcon(_currentItemSlotIndex);
+
+        StartCooldown();
+    }
+
+    public void StartCooldown()
+    {
+        if(_cooldownCoroutine != null)
+            StopCoroutine(_cooldownCoroutine);
+        
+        _cooldownCoroutine = StartCoroutine(Cooldown());
+    }
+
+    private IEnumerator Cooldown()
+    {
+        _enabled = false;
+        yield return new WaitForSeconds(0.3f);
+        _enabled = true;
+
+        _cooldownCoroutine = null;
     }
 }

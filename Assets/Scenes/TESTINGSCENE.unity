@@ -22655,13 +22655,7 @@ MonoBehaviour:
   _handsFolder: {fileID: 821736239}
   _playgroundFolder: {fileID: 628719780}
   _throwTriggerey: 323
-  _keptItemObjects:
-  - {fileID: 0}
-  - {fileID: 0}
-  _keptItemBases:
-  - {fileID: 0}
-  - {fileID: 0}
-  _currentItemSlotIndex: 0
+  _dropTriggerey: 324
 --- !u!114 &1235938147
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -25200,6 +25194,10 @@ PrefabInstance:
     - target: {fileID: 4459864850019384740, guid: 6bacecc4f3df9584198879c73a6b6c36, type: 3}
       propertyPath: maxLookAngle
       value: 60
+      objectReference: {fileID: 0}
+    - target: {fileID: 4459864850019384741, guid: 6bacecc4f3df9584198879c73a6b6c36, type: 3}
+      propertyPath: m_Mass
+      value: 100
       objectReference: {fileID: 0}
     - target: {fileID: 4459864850019384750, guid: 6bacecc4f3df9584198879c73a6b6c36, type: 3}
       propertyPath: m_Name

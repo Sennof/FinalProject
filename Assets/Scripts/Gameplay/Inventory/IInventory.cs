@@ -5,4 +5,8 @@ public interface IInventory
     public void HandlePickUp(ItemPickUpEvent eventData);
 
     public void ThrowObj();
+
+    public void DropObj();
+
+    public void StartCooldown();
 }

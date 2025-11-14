@@ -25,7 +25,7 @@ public class InteractRay : MonoBehaviour
 
     private void Update()
     {
-        if (!_enabled && _UIenabled)
+        if (!_enabled || _UIenabled)
             return;
 
         Raycasting();
@@ -62,9 +62,9 @@ public class InteractRay : MonoBehaviour
     private void HandleUIOpen(UIOpenEvent UIOpenEvent)
     {
         if(UIOpenEvent.opened)
-            _UIenabled = false;
-        else
             _UIenabled = true;
+        else
+            _UIenabled = false;
     }
 
     private void Raycasting()
@@ -84,6 +84,9 @@ public class InteractRay : MonoBehaviour
                     Enabled = null,
                 });
             }
+
+            if (_hit == null || _target == null)
+                return;
 
             if (_target.ActableDistance >= _rayHit.distance)
             {

@@ -11,6 +11,8 @@ public class ItemBase : MonoBehaviour
     private Rigidbody _rigidbody;
     private Collider _collider;
 
+    private Vector3 _scale;
+
     public void Initialize()
     {
         _rigidbody = GetComponent<Rigidbody>();
@@ -20,6 +22,8 @@ public class ItemBase : MonoBehaviour
             Debug.LogError($"Not enough data for normal operation | {name}");
         else
             Icon = _icon;
+
+        _scale = transform.localScale;
     }
 
     public void PickUp()
@@ -28,6 +32,8 @@ public class ItemBase : MonoBehaviour
         _rigidbody.isKinematic = true;
         transform.rotation = new Quaternion(0, 0, 0, 0);
         _collider.excludeLayers = _layerMask; //TODO: Починить взаимодействие коллайдера с геймобджектами на сцене, ща не работает
+
+        transform.localScale = _scale;
     }
 
     public void Throw()
@@ -35,9 +41,16 @@ public class ItemBase : MonoBehaviour
         _rigidbody.isKinematic = false;
         _rigidbody.AddForce(transform.forward * 50, ForceMode.Impulse);
         _collider.excludeLayers = 0;
+
+        transform.localScale = _scale;
     }
 
-    public void SetOff() => gameObject.SetActive(false);
+    public void Drop()
+    {
+        _rigidbody.isKinematic = false;
+        _rigidbody.AddForce(transform.forward * 1, ForceMode.Impulse);
+        _collider.excludeLayers = 0;
 
-    public void SetOn() => gameObject.SetActive(true);
+        transform.localScale = _scale;
+    }
 }
