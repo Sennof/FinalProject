@@ -7,6 +7,7 @@ public class InteractRay : MonoBehaviour
     private Interactable _target = null;
 
     private bool _enabled = true;
+    private bool _UIenabled = false;
     private bool _eventState = true;
 
     private EventBinding<UIOpenEvent> _eventBinding;
@@ -22,49 +23,15 @@ public class InteractRay : MonoBehaviour
         EventBus<UIOpenEvent>.Deregister(_eventBinding);
     }
 
-    private void FixedUpdate()
+    private void Update()
     {
-        if (!_enabled)
+        if (!_enabled || _UIenabled)
             return;
 
-        if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.forward), out _rayHit, 10, ~3))
-        {
-            Debug.DrawRay(transform.position, transform.TransformDirection(Vector3.forward) * _rayHit.distance, Color.yellow);
-            
-            if (_hit != _rayHit.collider.gameObject)
-            {
-                _hit = _rayHit.collider.gameObject;
-                _target = _hit.GetComponent<Interactable>();
-
-                EventBus<UIInteractionEvent>.Raise(new UIInteractionEvent
-                {
-                    KeyCode = _target.GetKeyCode(),
-                    Enabled = null,
-                });
-            }
-            
-            if(_target.GetActableDistance() >= Vector3.Distance(transform.position, _target.transform.position))
-            {
-                TryInvokeOnEvent();
-
-                Debug.DrawRay(transform.position, transform.TransformDirection(Vector3.forward) * _rayHit.distance, Color.green);
-                if (Input.GetKeyDown(_target.GetKeyCode()))
-                {
-                    _target.InvokeAction();
-                }
-            } 
-            else
-            {
-                TryInvokeOffEvent();
-            }
-        }
-        else
-        {
-            TryInvokeOffEvent();
-        }
+        Raycasting();
     }
 
-    private void TryInvokeOnEvent()
+    private void TryInvokeOnUIEvent()
     {
         if (!_eventState)
         {
@@ -78,7 +45,7 @@ public class InteractRay : MonoBehaviour
         }
     }
 
-    private void TryInvokeOffEvent()
+    private void TryInvokeOffUIEvent()
     {
         if (_eventState)
         {
@@ -95,8 +62,60 @@ public class InteractRay : MonoBehaviour
     private void HandleUIOpen(UIOpenEvent UIOpenEvent)
     {
         if(UIOpenEvent.opened)
-            _enabled = false;
+            _UIenabled = true;
         else
-            _enabled = true;
+            _UIenabled = false;
+    }
+
+    private void Raycasting()
+    {
+        if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.forward), out _rayHit, 10, ~3))
+        {
+            Debug.DrawRay(transform.position, transform.TransformDirection(Vector3.forward) * _rayHit.distance, Color.yellow);
+
+            if (_hit != _rayHit.collider.gameObject)
+            {
+                _hit = _rayHit.collider.gameObject;
+                _target = _hit.GetComponent<Interactable>();
+
+                EventBus<UIInteractionEvent>.Raise(new UIInteractionEvent
+                {
+                    KeyCode = _target.GetKeyCode(),
+                    Enabled = null,
+                });
+            }
+
+            if (_hit == null || _target == null)
+                return;
+
+            if (_target.ActableDistance >= _rayHit.distance)
+            {
+                TryInvokeOnUIEvent();
+
+                Debug.DrawRay(transform.position, transform.TransformDirection(Vector3.forward) * _rayHit.distance, Color.green);
+
+                if (Input.GetKeyDown(_target.GetKeyCode()))
+                {
+                    if (_hit.tag == "Item")
+                    {
+                        EventBus<ItemPickUpEvent>.Raise(new ItemPickUpEvent
+                        {
+                            ItemObject = _hit,
+                            ItemScript = _hit.GetComponent<ItemBase>(),
+                        });
+                    }
+                    else
+                        _target.InvokeAction();
+                }
+            }
+            else
+            {
+                TryInvokeOffUIEvent();
+            }
+        }
+        else
+        {
+            TryInvokeOffUIEvent();
+        }
     }
 }
