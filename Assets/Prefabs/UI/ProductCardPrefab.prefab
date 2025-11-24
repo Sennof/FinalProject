@@ -275,6 +275,7 @@ GameObject:
   - component: {fileID: 7870625228066750109}
   - component: {fileID: 5836656294255423523}
   - component: {fileID: -7409868405878239280}
+  - component: {fileID: 7740038221596917435}
   m_Layer: 0
   m_Name: ProductCardPrefab
   m_TagString: Untagged
@@ -411,6 +412,20 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &7740038221596917435
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7477487000870774779}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b047558eef6f62e4c878852210b626b2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _title: {fileID: 6624137940124335035}
+  _icon: {fileID: 4315894892264128593}
 --- !u!1 &8844039069790441201
 GameObject:
   m_ObjectHideFlags: 0

@@ -16,6 +16,8 @@ public class EntryPoint : MonoBehaviour
         InitializeUIWindows();
         InitializeSubWindows();
 
+        InitializeUIFactories();
+
         InitializePlayerMovement();
         Debug.Log("Entry point awake is over");
     }
@@ -171,6 +173,19 @@ public class EntryPoint : MonoBehaviour
         catch
         {
             Debug.LogError("Failed to initialize InventoryUI | EntryPoint");
+        }
+    }
+
+    private void InitializeUIFactories()
+    {
+        try
+        {
+            FindAnyObjectByType<UIFactoryBase>().Initialize();
+            Debug.Log("EntryPoint initialized InitializeUIFactories");
+        }
+        catch
+        {
+            Debug.LogError("Failed to initialize InitializeUIFactories | EntryPoint");
         }
     }
 

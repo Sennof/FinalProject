@@ -17,10 +17,10 @@ public class UIManager : MonoBehaviour, IUIManager
         OffWindows(); 
     }
 
-    public void ToWindow(UIWindowsEnum type)
+    public void ToWindow(int type)
     {
         OffWindows();
-        OnWindow(type);
+        OnWindow((UIWindowsEnum)type);
     }
 
     public void OffWindows()

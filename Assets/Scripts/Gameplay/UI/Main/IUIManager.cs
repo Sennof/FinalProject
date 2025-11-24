@@ -2,7 +2,7 @@ public interface IUIManager
 {
     public abstract void Initialize();
 
-    public abstract void ToWindow(UIWindowsEnum type);
+    public abstract void ToWindow(int type);
 
     public abstract void OffWindows();
 
