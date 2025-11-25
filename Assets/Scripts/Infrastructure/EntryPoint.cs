@@ -18,6 +18,8 @@ public class EntryPoint : MonoBehaviour
 
         InitializeUIFactories();
 
+        InitializeUIDelieverySideMenu();
+
         InitializePlayerMovement();
         Debug.Log("Entry point awake is over");
     }
@@ -180,12 +182,30 @@ public class EntryPoint : MonoBehaviour
     {
         try
         {
-            FindAnyObjectByType<UIFactoryBase>().Initialize();
-            Debug.Log("EntryPoint initialized InitializeUIFactories");
+            UIFactoryBase[] factories = FindObjectsByType<UIFactoryBase>(0);
+            foreach(UIFactoryBase factory  in factories)
+            {
+                factory.Initialize();
+            }
+
+            Debug.Log("EntryPoint initialized UIFactories");
         }
         catch
         {
-            Debug.LogError("Failed to initialize InitializeUIFactories | EntryPoint");
+            Debug.LogError("Failed to initialize UIFactories | EntryPoint");
+        }
+    }
+
+    private void InitializeUIDelieverySideMenu()
+    {
+        try
+        {
+            FindAnyObjectByType<DelieverySideMenu>().Initialize();
+            Debug.Log("EntryPoint intialized UIDelieverySideMenu");
+        }
+        catch
+        {
+            Debug.Log("Failed to intialize UIDelieverySideMenu | EntryPoint ");
         }
     }
 

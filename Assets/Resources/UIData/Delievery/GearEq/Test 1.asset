@@ -10,9 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 381b592fef0d73d4a8171fbf871ffcb6, type: 3}
-  m_Name: Test
+  m_Name: Test 1
   m_EditorClassIdentifier: 
-  TitleName: Test
+  TitleName: Test 1
+  Description: FUCFUCCCCC
   Icon: {fileID: 21300000, guid: 7c791b06d60186a49b98056b1d59b321, type: 3}
   UICardPrefab: {fileID: 7477487000870774779, guid: bca6a857051b9de41ab1fa4caff69cda, type: 3}
   Price: 0

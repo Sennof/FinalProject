@@ -35,7 +35,7 @@ public class UIFactoryBase : MonoBehaviour, IUIFactoryBase
     {
         for(int i = 0; i < _generatedUICards.Count; i++)
         {
-            _generatedUICards[i].GetComponent<UIProductCard>().Initialize(_data[i].TitleName, _data[i].Icon, ((_data[i]) as ProductData).Prefab);
+            _generatedUICards[i].GetComponent<UIProductCard>().Initialize((_data[i] as ProductData));
         }
     }
 

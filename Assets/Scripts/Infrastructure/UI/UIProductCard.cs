@@ -8,20 +8,23 @@ public class UIProductCard : MonoBehaviour
     [SerializeField] private Image _icon;
 
     private GameObject _prefab;
+    private ProductData _productData;
 
-    public void Initialize(string title, Sprite icon, GameObject prefab)
+    public void Initialize(ProductData data)
     {
-        _title.text = title;
-        _icon.sprite = icon;
-        _prefab = prefab;
+        _productData = data;
+
+        _title.text = data.TitleName;
+        _icon.sprite = data.Icon;
+        _prefab = data.Prefab;
 
         Debug.Log($"Initialized ui card | {transform.parent.name}");
     }
 
-    public void Buy()
+    public void SetCurrent()
     {
-        //MoneyMager
-        //SpawnManager
-        Debug.Log("Spawned");
+        EventBus<UIProductCardClickEvent>.Raise(new UIProductCardClickEvent { 
+        ItemData = _productData,
+        });
     }
 }
