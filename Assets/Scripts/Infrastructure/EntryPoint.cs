@@ -20,6 +20,7 @@ public class EntryPoint : MonoBehaviour
 
         InitializeUIDelieverySideMenu();
 
+        InitializeProductDelievery();
         InitializePlayerMovement();
         Debug.Log("Entry point awake is over");
     }
@@ -34,7 +35,7 @@ public class EntryPoint : MonoBehaviour
     }
 
     //Initialization
-    private void InitializeUIManager() 
+    private void InitializeUIManager()
     {
         try
         {
@@ -77,7 +78,7 @@ public class EntryPoint : MonoBehaviour
             foreach (UIWindow uiWindow in uiWindows)
             {
                 uiWindow.Initialize();
-                Debug.Log($"Entry point UI subwindow {uiWindow.gameObject.name} initialized");
+                Debug.Log($"Entry point UI window {uiWindow.gameObject.name} initialized");
             }
             Debug.Log("Entry point UIWindows initialization is over");
         }
@@ -108,7 +109,7 @@ public class EntryPoint : MonoBehaviour
             (FindAnyObjectByType(typeof(HintShower)) as HintShower).Initialize();
             Debug.Log("Entry point HintShower initialized");
         }
-        catch 
+        catch
         {
             Debug.LogError("Failed to initialize HintShower | EntryPoint");
         }
@@ -152,7 +153,7 @@ public class EntryPoint : MonoBehaviour
         {
             Interactable[] interactables = FindObjectsByType<Interactable>(0);
 
-            foreach(Interactable interactable in interactables)
+            foreach (Interactable interactable in interactables)
             {
                 interactable.Initialize();
                 Debug.Log($"Entry point initialized interactable {interactable.name}");
@@ -183,7 +184,7 @@ public class EntryPoint : MonoBehaviour
         try
         {
             UIFactoryBase[] factories = FindObjectsByType<UIFactoryBase>(0);
-            foreach(UIFactoryBase factory  in factories)
+            foreach (UIFactoryBase factory in factories)
             {
                 factory.Initialize();
             }
@@ -206,6 +207,19 @@ public class EntryPoint : MonoBehaviour
         catch
         {
             Debug.Log("Failed to intialize UIDelieverySideMenu | EntryPoint ");
+        }
+    }
+
+    private void InitializeProductDelievery()
+    {
+        try
+        {
+            FindAnyObjectByType<ProductDelievery>().Initialize();
+            Debug.Log("EntryPoint initialized ProductDelievery");
+        }
+        catch
+        {
+            Debug.Log("Failed to initialize ProductDelievery | EntryPoint");
         }
     }
 

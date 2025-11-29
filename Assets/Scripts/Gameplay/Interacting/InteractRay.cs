@@ -10,25 +10,23 @@ public class InteractRay : MonoBehaviour
     private bool _UIenabled = false;
     private bool _eventState = true;
 
-    private EventBinding<UIOpenEvent> _eventBinding;
+    private EventBinding<UIChangeStateEvent> _eventBinding;
 
     public void LateInitialize()
     {
-        _eventBinding = new EventBinding<UIOpenEvent>(HandleUIOpen);
-        EventBus<UIOpenEvent>.Register(_eventBinding);
+        _eventBinding = new EventBinding<UIChangeStateEvent>(HandleUIOpen);
+        EventBus<UIChangeStateEvent>.Register(_eventBinding);
     }
 
     private void OnDisable()
     {
-        EventBus<UIOpenEvent>.Deregister(_eventBinding);
+        EventBus<UIChangeStateEvent>.Deregister(_eventBinding);
     }
 
     private void Update()
     {
-        if (!_enabled || _UIenabled)
-            return;
-
-        Raycasting();
+        if (_enabled || _UIenabled)
+            Raycasting();
     }
 
     private void TryInvokeOnUIEvent()
@@ -59,9 +57,9 @@ public class InteractRay : MonoBehaviour
         }
     }
 
-    private void HandleUIOpen(UIOpenEvent UIOpenEvent)
+    private void HandleUIOpen(UIChangeStateEvent UIOpenEvent)
     {
-        if(UIOpenEvent.opened)
+        if(UIOpenEvent.canBeAnyOpened)
             _UIenabled = true;
         else
             _UIenabled = false;

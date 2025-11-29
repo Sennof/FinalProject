@@ -16,7 +16,7 @@ using UnityEngine.UI;
 
 public class FirstPersonController : MonoBehaviour
 {
-    private EventBinding<UIOpenEvent> eventBinding;
+    private EventBinding<UIChangeStateEvent> _eventBinding;
 
     private Rigidbody rb;
 
@@ -200,14 +200,14 @@ public class FirstPersonController : MonoBehaviour
         #endregion
 
         #region EventBus
-        eventBinding = new EventBinding<UIOpenEvent>(HandleUIOpen);
-        EventBus<UIOpenEvent>.Register(eventBinding);
+        _eventBinding = new EventBinding<UIChangeStateEvent>(HandleUIOpen);
+        EventBus<UIChangeStateEvent>.Register(_eventBinding);
         #endregion
     }
 
     private void OnDisable()
     {
-        EventBus<UIOpenEvent>.Deregister(eventBinding);
+        EventBus<UIChangeStateEvent>.Deregister(_eventBinding);
     }
 
     float camRotation;
@@ -453,19 +453,9 @@ public class FirstPersonController : MonoBehaviour
         #endregion
     }
 
-    private void HandleUIOpen(UIOpenEvent UIOpenEvent)
+    private void HandleUIOpen(UIChangeStateEvent UIOpenEvent)
     {
-        if (UIOpenEvent.opened == true)
-        {
-            cameraCanMove = false;
-            playerCanMove = false;
-            enableJump = false;
-            enableCrouch = false;
-            enableHeadBob = false;
-            enableSprint = false;
-            enableZoom = false;
-        }
-        else
+        if (UIOpenEvent.canBeAnyOpened == true)
         {
             cameraCanMove = true;
             playerCanMove = true;
@@ -474,6 +464,16 @@ public class FirstPersonController : MonoBehaviour
             enableHeadBob = true;
             enableSprint = true;
             enableZoom = true;
+        }
+        else
+        {
+            cameraCanMove = false;
+            playerCanMove = false;
+            enableJump = false;
+            enableCrouch = false;
+            enableHeadBob = false;
+            enableSprint = false;
+            enableZoom = false;
         }
     }
 

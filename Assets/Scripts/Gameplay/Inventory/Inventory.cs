@@ -21,7 +21,7 @@ public class Inventory : MonoBehaviour, IInventory
     [SerializeField] private KeyCode _dropTriggerey = KeyCode.Mouse1;
 
     private EventBinding<ItemPickUpEvent> _itemPickUpEventBinding;
-    private EventBinding<UIOpenEvent> _uiOpenEventBinding;
+    private EventBinding<UIChangeStateEvent> _uiOpenEventBinding;
 
     private GameObject[] _keptItemObjects = new GameObject[2];
     private ItemBase[] _keptItemBases = new ItemBase[2];
@@ -38,8 +38,8 @@ public class Inventory : MonoBehaviour, IInventory
         _itemPickUpEventBinding = new EventBinding<ItemPickUpEvent>(HandlePickUp);
         EventBus<ItemPickUpEvent>.Register(_itemPickUpEventBinding);
 
-        _uiOpenEventBinding = new EventBinding<UIOpenEvent>(HandleUIOpen);
-        EventBus<UIOpenEvent>.Register(_uiOpenEventBinding);
+        _uiOpenEventBinding = new EventBinding<UIChangeStateEvent>(HandleUIOpen);
+        EventBus<UIChangeStateEvent>.Register(_uiOpenEventBinding);
 
         if (_handsFolder == null || _playgroundFolder == null)
             Debug.LogError($"There is not enough data for normal operation | {name}");
@@ -73,11 +73,11 @@ public class Inventory : MonoBehaviour, IInventory
     private void OnDisable()
     {
         EventBus<ItemPickUpEvent>.Deregister(_itemPickUpEventBinding);
-        EventBus<UIOpenEvent>.Deregister(_uiOpenEventBinding);
+        EventBus<UIChangeStateEvent>.Deregister(_uiOpenEventBinding);
     }
-    private void HandleUIOpen(UIOpenEvent UIOpenEvent)
+    private void HandleUIOpen(UIChangeStateEvent UIOpenEvent)
     {
-        if (UIOpenEvent.opened)
+        if (UIOpenEvent.canBeAnyOpened)
             _enabled = false;
         else
             _enabled = true;

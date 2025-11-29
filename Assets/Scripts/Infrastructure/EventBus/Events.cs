@@ -3,11 +3,10 @@
 public interface IEvent { }
 
 #region UI
-public struct UIOpenEvent : IEvent
+public struct UIChangeStateEvent : IEvent 
 {
-    public bool opened;
+    public bool canBeAnyOpened;
 }
-
 public struct UIInteractionEvent : IEvent
 {
     public bool? Enabled;
