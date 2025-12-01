@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 381b592fef0d73d4a8171fbf871ffcb6, type: 3}
+  m_Name: Test 2
+  m_EditorClassIdentifier: 
+  TitleName: Test 2
+  Description: SSSSWWWWAA
+  Icon: {fileID: 21300000, guid: 7c791b06d60186a49b98056b1d59b321, type: 3}
+  UICardPrefab: {fileID: 7477487000870774779, guid: bca6a857051b9de41ab1fa4caff69cda, type: 3}
+  Price: 0
+  DiscountMax: 0
+  Prefab: {fileID: 5764215710657183778, guid: 8696deb4084fc3f4b82a61e6f7f12e96, type: 3}

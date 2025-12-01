@@ -1,6 +1,6 @@
 using UnityEngine;
 
-[RequireComponent (typeof(Rigidbody))]
+[RequireComponent (typeof(Rigidbody), typeof(Collider))]
 public class ItemBase : MonoBehaviour
 {
     public Sprite Icon { get; private set; }
