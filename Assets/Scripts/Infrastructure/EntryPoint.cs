@@ -12,13 +12,13 @@ public class EntryPoint : MonoBehaviour
 
         InitializeInteractables();
 
+        InitializeUIDelieverySideMenu();
+        InitializeUIFactories();
+
         InitializeUIManager();
         InitializeUIWindows();
         InitializeSubWindows();
 
-        InitializeUIFactories();
-
-        InitializeUIDelieverySideMenu();
 
         InitializeProductDelievery();
         InitializePlayerMovement();
@@ -201,12 +201,13 @@ public class EntryPoint : MonoBehaviour
     {
         try
         {
-            FindAnyObjectByType<DelieverySideMenu>().Initialize();
+            DelieverySideMenu menu = FindAnyObjectByType<DelieverySideMenu>().GetComponent<DelieverySideMenu>();
+            menu.Initialize();
             Debug.Log("EntryPoint intialized UIDelieverySideMenu");
         }
         catch
         {
-            Debug.Log("Failed to intialize UIDelieverySideMenu | EntryPoint ");
+            Debug.LogError("Failed to intialize UIDelieverySideMenu | EntryPoint ");
         }
     }
 

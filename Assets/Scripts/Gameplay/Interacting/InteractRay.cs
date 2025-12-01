@@ -25,7 +25,7 @@ public class InteractRay : MonoBehaviour
 
     private void Update()
     {
-        if (_enabled || _UIenabled)
+        if (_enabled && !_UIenabled)
             Raycasting();
     }
 
@@ -60,9 +60,9 @@ public class InteractRay : MonoBehaviour
     private void HandleUIOpen(UIChangeStateEvent UIOpenEvent)
     {
         if(UIOpenEvent.canBeAnyOpened)
-            _UIenabled = true;
-        else
             _UIenabled = false;
+        else
+            _UIenabled = true;
     }
 
     private void Raycasting()
@@ -76,11 +76,14 @@ public class InteractRay : MonoBehaviour
                 _hit = _rayHit.collider.gameObject;
                 _target = _hit.GetComponent<Interactable>();
 
-                EventBus<UIInteractionEvent>.Raise(new UIInteractionEvent
+                if(_target != null)
                 {
-                    KeyCode = _target.GetKeyCode(),
-                    Enabled = null,
-                });
+                    EventBus<UIInteractionEvent>.Raise(new UIInteractionEvent
+                    {
+                        KeyCode = _target.GetKeyCode(),
+                        Enabled = null,
+                    });
+                }
             }
 
             if (_hit == null || _target == null)

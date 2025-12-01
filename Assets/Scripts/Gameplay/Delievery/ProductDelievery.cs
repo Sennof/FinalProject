@@ -33,5 +33,8 @@ public class ProductDelievery : MonoBehaviour
     {
         GameObject obj = Instantiate(_eventData.Prefab, _playgroundFolder, _spawnPoint);
         obj.SetActive(true);
+
+        obj.GetComponent<Interactable>().Initialize();
+        obj.GetComponent<ItemBase>().Initialize();
     }
 }

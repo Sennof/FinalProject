@@ -8,7 +8,7 @@ public class SubWindowManager : MonoBehaviour, ISubWindowManager
 
     public void Initialize()
     {
-        //Initialization 
+        ToPage(0); 
     }
 
     private void OnDisable()
