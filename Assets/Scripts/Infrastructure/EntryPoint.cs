@@ -12,21 +12,15 @@ public class EntryPoint : MonoBehaviour
 
         InitializeInteractables();
 
-<<<<<<< HEAD
         InitializeUIDelieverySideMenu();
         InitializeUIFactories();
 
-=======
->>>>>>> master
         InitializeUIManager();
         InitializeUIWindows();
         InitializeSubWindows();
 
-<<<<<<< HEAD
-
         InitializeProductDelievery();
-=======
->>>>>>> master
+
         InitializePlayerMovement();
         Debug.Log("Entry point awake is over");
     }
@@ -84,11 +78,7 @@ public class EntryPoint : MonoBehaviour
             foreach (UIWindow uiWindow in uiWindows)
             {
                 uiWindow.Initialize();
-<<<<<<< HEAD
                 Debug.Log($"Entry point UI window {uiWindow.gameObject.name} initialized");
-=======
-                Debug.Log($"Entry point UI subwindow {uiWindow.gameObject.name} initialized");
->>>>>>> master
             }
             Debug.Log("Entry point UIWindows initialization is over");
         }
@@ -119,11 +109,7 @@ public class EntryPoint : MonoBehaviour
             (FindAnyObjectByType(typeof(HintShower)) as HintShower).Initialize();
             Debug.Log("Entry point HintShower initialized");
         }
-<<<<<<< HEAD
         catch
-=======
-        catch 
->>>>>>> master
         {
             Debug.LogError("Failed to initialize HintShower | EntryPoint");
         }
@@ -167,11 +153,7 @@ public class EntryPoint : MonoBehaviour
         {
             Interactable[] interactables = FindObjectsByType<Interactable>(0);
 
-<<<<<<< HEAD
             foreach (Interactable interactable in interactables)
-=======
-            foreach(Interactable interactable in interactables)
->>>>>>> master
             {
                 interactable.Initialize();
                 Debug.Log($"Entry point initialized interactable {interactable.name}");
@@ -195,7 +177,6 @@ public class EntryPoint : MonoBehaviour
         {
             Debug.LogError("Failed to initialize InventoryUI | EntryPoint");
         }
-<<<<<<< HEAD
     }
 
     private void InitializeUIFactories()
@@ -241,8 +222,6 @@ public class EntryPoint : MonoBehaviour
         {
             Debug.Log("Failed to initialize ProductDelievery | EntryPoint");
         }
-=======
->>>>>>> master
     }
 
     //Late initialization

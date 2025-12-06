@@ -13,7 +13,6 @@ public struct UIInteractionEvent : IEvent
     public KeyCode? KeyCode;
 }
 
-<<<<<<< HEAD
 public struct UIProductCardClickEvent: IEvent
 {
     public ProductData ItemData;
@@ -22,13 +21,10 @@ public struct UIProductCardClickEvent: IEvent
 #endregion
 
 #region Core
-=======
->>>>>>> master
 public struct ItemPickUpEvent : IEvent
 {
     public GameObject ItemObject;
     public ItemBase ItemScript;
-<<<<<<< HEAD
 }
 
 public struct DelieveryRequestEvent: IEvent
@@ -37,6 +33,3 @@ public struct DelieveryRequestEvent: IEvent
     public GameObject Prefab;
 }
 #endregion
-=======
-}
->>>>>>> master
