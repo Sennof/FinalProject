@@ -75,6 +75,9 @@ public class DelieverySideMenu : MonoBehaviour
                 ProductAmount = _buyAmount,
                 Prefab = _productData.Prefab,
             });
+
+            _buyAmount = 1;
+            UpdateAmountText();
         }
     }
 

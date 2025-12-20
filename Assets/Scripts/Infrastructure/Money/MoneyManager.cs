@@ -7,8 +7,10 @@ public class MoneyManager : MonoBehaviour, IMoneyManager
 
     public void Initialize()
     {
-        Money = 100; //TODO: saving system
+        Money = 0; //TODO: saving system
         Debug.Log($"Money {Money} | MoneyManager");
+
+        SetMoney(100);
     }
 
     public void AddMoney(int amount)
@@ -17,6 +19,10 @@ public class MoneyManager : MonoBehaviour, IMoneyManager
             $"then Money: {Money + amount} | MoneyManager");
         
         Money += amount;
+        EventBus<MoneyAmountChangeEvent>.Raise(new MoneyAmountChangeEvent
+        {
+            Money = Money,
+        });
     }
 
     public void SetMoney(int value)
@@ -25,6 +31,10 @@ public class MoneyManager : MonoBehaviour, IMoneyManager
             $"then Money: {value} | MoneyManager");
 
         Money = value;
+        EventBus<MoneyAmountChangeEvent>.Raise(new MoneyAmountChangeEvent
+        {
+            Money = Money,
+        });
     }
 
     public bool Subtract(int amount)
@@ -35,6 +45,11 @@ public class MoneyManager : MonoBehaviour, IMoneyManager
                 $"then Money: {Money - amount} | MoneyManager");
 
             Money -= amount;
+            EventBus<MoneyAmountChangeEvent>.Raise(new MoneyAmountChangeEvent
+            {
+                Money = Money,
+            });
+
             return true;
         }
         else
