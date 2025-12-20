@@ -22,6 +22,8 @@ public class EntryPoint : MonoBehaviour
         InitializeProductDelievery();
 
         InitializePlayerMovement();
+
+        InitializeMoneyManager();
         Debug.Log("Entry point awake is over");
     }
 
@@ -34,6 +36,7 @@ public class EntryPoint : MonoBehaviour
         Debug.Log("Entry point start is over");
     }
 
+    #region Awake Initialization
     //Initialization
     private void InitializeUIManager()
     {
@@ -224,6 +227,21 @@ public class EntryPoint : MonoBehaviour
         }
     }
 
+    private void InitializeMoneyManager()
+    {
+        try
+        {
+            FindAnyObjectByType<MoneyManager>().Initialize();
+            Debug.Log("EntryPoint initialized MoneyManager");
+        }
+        catch
+        {
+            Debug.Log("Failed to initialize MoneyManager | EntryPoint");
+        }
+    }
+    #endregion
+
+    #region Late Initialization
     //Late initialization
     private void LateInitializeInteractRay()
     {
@@ -263,4 +281,5 @@ public class EntryPoint : MonoBehaviour
             Debug.LogError("Failed to lateInitialize UIManagers | EntryPoint");
         }
     }
+    #endregion
 }
