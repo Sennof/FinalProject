@@ -16,6 +16,6 @@ MonoBehaviour:
   Description: SSSSWWWWAA
   Icon: {fileID: 21300000, guid: 7c791b06d60186a49b98056b1d59b321, type: 3}
   UICardPrefab: {fileID: 7477487000870774779, guid: bca6a857051b9de41ab1fa4caff69cda, type: 3}
-  Price: 0
+  Price: 15
   DiscountMax: 0
   Prefab: {fileID: 5764215710657183778, guid: 8696deb4084fc3f4b82a61e6f7f12e96, type: 3}

@@ -1,5 +1,6 @@
 using TMPro;
 using UnityEngine;
+using Zenject;
 
 public class DelieverySideMenu : MonoBehaviour
 {
@@ -13,6 +14,9 @@ public class DelieverySideMenu : MonoBehaviour
 
     private EventBinding<UIProductCardClickEvent> _eventBinding;
     private ProductData _productData;
+
+    [Inject]
+    private IMoneyManager _moneyManager;
 
     public void Initialize()
     {
@@ -64,11 +68,17 @@ public class DelieverySideMenu : MonoBehaviour
 
     public void RequestDelivery()
     {
-        EventBus<DelieveryRequestEvent>.Raise(new DelieveryRequestEvent
+        if(_moneyManager.Subtract(_buyAmount * _productData.Price))
         {
-            ProductAmount = _buyAmount,
-            Prefab = _productData.Prefab,
-        });
+            EventBus<DelieveryRequestEvent>.Raise(new DelieveryRequestEvent
+            {
+                ProductAmount = _buyAmount,
+                Prefab = _productData.Prefab,
+            });
+
+            _buyAmount = 1;
+            UpdateAmountText();
+        }
     }
 
     private void UpdateAmountText() => _buyAmountText.text = $"Количество: {_buyAmount.ToString()}";

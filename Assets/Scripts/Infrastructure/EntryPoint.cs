@@ -1,3 +1,4 @@
+using Unity.VisualScripting.Antlr3.Runtime;
 using UnityEngine;
 
 public class EntryPoint : MonoBehaviour
@@ -22,6 +23,9 @@ public class EntryPoint : MonoBehaviour
         InitializeProductDelievery();
 
         InitializePlayerMovement();
+
+        InitializeUIMoneyBalance();
+        InitializeMoneyManager();
         Debug.Log("Entry point awake is over");
     }
 
@@ -35,6 +39,7 @@ public class EntryPoint : MonoBehaviour
     }
 
     //Initialization
+    #region Global UI
     private void InitializeUIManager()
     {
         try
@@ -88,20 +93,6 @@ public class EntryPoint : MonoBehaviour
         }
     }
 
-
-    private void InitializePlayerMovement()
-    {
-        try
-        {
-            (FindAnyObjectByType(typeof(FirstPersonController)) as FirstPersonController).Initialize();
-            Debug.Log($"Entry point Players movement initialized");
-        }
-        catch
-        {
-            Debug.LogError("Failed to initialize PlayerMovements | EntryPoint");
-        }
-    }
-
     private void InitializeHintShower()
     {
         try
@@ -115,6 +106,41 @@ public class EntryPoint : MonoBehaviour
         }
     }
 
+    private void InitializeUIFactories()
+    {
+        try
+        {
+            UIFactoryBase[] factories = FindObjectsByType<UIFactoryBase>(0);
+            foreach (UIFactoryBase factory in factories)
+            {
+                factory.Initialize();
+            }
+
+            Debug.Log("EntryPoint initialized UIFactories");
+        }
+        catch
+        {
+            Debug.LogError("Failed to initialize UIFactories | EntryPoint");
+        }
+    }
+    #endregion
+
+    #region PlayerMovement
+    private void InitializePlayerMovement()
+    {
+        try
+        {
+            (FindAnyObjectByType(typeof(FirstPersonController)) as FirstPersonController).Initialize();
+            Debug.Log($"Entry point Players movement initialized");
+        }
+        catch
+        {
+            Debug.LogError("Failed to initialize PlayerMovements | EntryPoint");
+        }
+    }
+    #endregion
+
+    #region Inventory & Items
     private void InitializeItems()
     {
         try
@@ -165,7 +191,9 @@ public class EntryPoint : MonoBehaviour
             Debug.LogError($"Failed to initialize Interactables | EntryPoint");
         }
     }
+    #endregion
 
+    #region UI
     private void InitializeInventoryUI()
     {
         try
@@ -176,24 +204,6 @@ public class EntryPoint : MonoBehaviour
         catch
         {
             Debug.LogError("Failed to initialize InventoryUI | EntryPoint");
-        }
-    }
-
-    private void InitializeUIFactories()
-    {
-        try
-        {
-            UIFactoryBase[] factories = FindObjectsByType<UIFactoryBase>(0);
-            foreach (UIFactoryBase factory in factories)
-            {
-                factory.Initialize();
-            }
-
-            Debug.Log("EntryPoint initialized UIFactories");
-        }
-        catch
-        {
-            Debug.LogError("Failed to initialize UIFactories | EntryPoint");
         }
     }
 
@@ -211,6 +221,26 @@ public class EntryPoint : MonoBehaviour
         }
     }
 
+    private void InitializeUIMoneyBalance()
+    {
+        try
+        {
+            UIMoneyBalance[] uiMoneyBalances = GameObject.FindObjectsByType<UIMoneyBalance>(0);
+
+            foreach (UIMoneyBalance balance in uiMoneyBalances)
+            {
+                balance.Initialize();
+                Debug.Log($"Entry point initialized: {balance.gameObject.name}");
+            }
+        }
+        catch
+        {
+            Debug.Log("Failed to initialize UIMoneyBalances | EntryPoint");
+        }
+    }
+    #endregion
+
+    #region ProductDelievery
     private void InitializeProductDelievery()
     {
         try
@@ -223,8 +253,25 @@ public class EntryPoint : MonoBehaviour
             Debug.Log("Failed to initialize ProductDelievery | EntryPoint");
         }
     }
+    #endregion
+
+    #region Money
+    private void InitializeMoneyManager()
+    {
+        try
+        {
+            FindAnyObjectByType<MoneyManager>().Initialize();
+            Debug.Log("EntryPoint initialized MoneyManager");
+        }
+        catch
+        {
+            Debug.Log("Failed to initialize MoneyManager | EntryPoint");
+        }
+    }
+    #endregion
 
     //Late initialization
+    #region InteractRay
     private void LateInitializeInteractRay()
     {
         try
@@ -237,7 +284,9 @@ public class EntryPoint : MonoBehaviour
             Debug.LogError("Failed to lateInitialize InteractRay | EntryPoint");
         }
     }
+    #endregion
 
+    #region PlayerMovement
     private void LateInitializePlayerMovement()
     {
         try
@@ -250,7 +299,9 @@ public class EntryPoint : MonoBehaviour
             Debug.LogError("Failed to lateInitialize PlayerMovement | EntryPoint");
         }
     }
+    #endregion
 
+    #region Global UI
     private void LateInitializeUIManagers()
     {
         try
@@ -263,4 +314,5 @@ public class EntryPoint : MonoBehaviour
             Debug.LogError("Failed to lateInitialize UIManagers | EntryPoint");
         }
     }
+    #endregion
 }

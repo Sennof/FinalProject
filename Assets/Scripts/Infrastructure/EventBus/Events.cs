@@ -32,4 +32,10 @@ public struct DelieveryRequestEvent: IEvent
     public int ProductAmount;
     public GameObject Prefab;
 }
+
+public struct MoneyAmountChangeEvent : IEvent
+{
+    public int Money;
+}
+
 #endregion
